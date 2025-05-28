@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Classroom;
 use App\Models\Schedule;
 use App\Models\Subject;
+use App\Models\Teacher;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,58 +26,66 @@ class DatabaseSeeder extends Seeder
                 'role' => 'admin',
             ]
         );
-        Student::factory(10)->create();
         Classroom::factory()->create(
             [
                 'name' => '10A',
+                'grade' => '10',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '10B',
+                'grade' => '10',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '10C',
+                'grade' => '10',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '10D',
+                'grade' => '10',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '10E',
+                'grade' => '10',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '11A',
+                'grade' => '11',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '11B',
+                'grade' => '11',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '11C',
+                'grade' => '11',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '11D',
+                'grade' => '11',
                 'capacity' => 30,
             ]
         );
@@ -84,36 +93,42 @@ class DatabaseSeeder extends Seeder
         Classroom::factory()->create(
             [
                 'name' => '11E',
+                'grade' => '11',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '12A',
+                'grade' => '12',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '12B',
+                'grade' => '12',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '12C',
+                'grade' => '12',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '12D',
+                'grade' => '12',
                 'capacity' => 30,
             ]
         );
         Classroom::factory()->create(
             [
                 'name' => '12E',
+                'grade' => '12',
                 'capacity' => 30,
             ]
         );
@@ -171,6 +186,75 @@ class DatabaseSeeder extends Seeder
                 'is_mandatory' => false,
             ]
         );
-        Schedule::factory(20)->create();
+        Teacher::factory()->create(
+            [
+                'name' => 'Budi Santoso'
+            ]
+        );
+        Teacher::factory()->create(
+            [
+                'name' => 'Siti Aminah'
+            ]
+        );
+        Teacher::factory()->create(
+            [
+                'name' => 'Dewi Sartika'
+            ]
+        );
+        Teacher::factory()->create(
+            [
+                'name' => 'Rina Suryani'
+            ]
+        );
+        Teacher::factory()->create(
+            [
+                'name' => 'Agus Salim'
+            ]
+        );
+        Schedule::factory()->create(
+            [
+                'start_time' => '08:00:00',
+                'end_time' => '09:30:00',
+                'classroom_id' => 6,
+                'subject_id' => 2,
+                'teacher_id' => 1,
+            ]
+        );
+        Schedule::factory()->create(
+            [
+                'start_time' => '10:00:00',
+                'end_time' => '11:30:00',
+                'classroom_id' => 7,
+                'subject_id' => 3,
+                'teacher_id' => 2,
+            ]
+        );
+        Schedule::factory()->create(
+            [
+                'start_time' => '12:00:00',
+                'end_time' => '13:30:00',
+                'classroom_id' => 8,
+                'subject_id' => 4,
+                'teacher_id' => 3,
+            ]
+        );
+        Schedule::factory()->create(
+            [
+                'start_time' => '14:00:00',
+                'end_time' => '15:30:00',
+                'classroom_id' => 9,
+                'subject_id' => 5,
+                'teacher_id' => 4,
+            ]
+        );
+        Schedule::factory()->create(
+            [
+                'start_time' => '08:00:00',
+                'end_time' => '09:30:00',
+                'classroom_id' => 10,
+                'subject_id' => 6,
+                'teacher_id' => 5,
+            ]
+        );
     }
 }

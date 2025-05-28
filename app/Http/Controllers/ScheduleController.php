@@ -17,8 +17,16 @@ class ScheduleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(Request $request){
+        $user = auth()->user();
+        if ($user->role !== 'admin') {
+            $student = Student::where('user_id', $user->id)->first();
+            $schedules = Schedule::with(['classroom', 'subject', 'teacher', 'students'])
+                ->whereHas('classroom', function ($query) use ($student) {
+                    $query->where('grade', $student->grade);
+                })->get();
+            return ScheduleResource::collection($schedules);
+        }
         $schedules = Schedule::with(['classroom', 'subject', 'teacher', 'students'])->get();
         return ScheduleResource::collection($schedules);
     }
@@ -26,8 +34,7 @@ class ScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'classroom_id' => 'required|exists:classrooms,id',
             'subject_id' => 'required|exists:subjects,id',
@@ -40,24 +47,13 @@ class ScheduleController extends Controller
         }
 
         $schedule = Schedule::create($request->all());
-        $subject = Subject::findOrFail($request->subject_id);
-        if ($subject->is_mandatory) {
-            $students = Student::all();
-            foreach ($students as $student) {
-                $studentSchedule = new StudentSchedule();
-                $studentSchedule->student_id = $student->id;
-                $studentSchedule->schedule_id = $schedule->id;
-                $studentSchedule->save();
-            }
-        }
         return new ScheduleResource($schedule->load(['classroom', 'subject', 'teacher']));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
+    public function show(string $id){
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|exists:schedules,id',
         ]);
@@ -71,8 +67,7 @@ class ScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
+    public function update(Request $request, string $id){
         $validator = Validator::make($request->all(), [
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
             'subject_id' => 'sometimes|required|exists:subjects,id',
@@ -92,8 +87,7 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    public function destroy(string $id){
         $validator = Validator::make(['id' => $id], [
             'id' => 'required|exists:schedules,id',
         ]);
@@ -103,8 +97,7 @@ class ScheduleController extends Controller
         return response()->json(['message' => 'Schedule deleted successfully']);
     }
 
-    public function setStudentSchedule(Request $request)
-    {
+    public function setStudentSchedule(Request $request){
         $validator = Validator::make($request->all(), [
             'student_id' => 'required|exists:students,id',
             'schedule_id' => 'required|exists:schedules,id',

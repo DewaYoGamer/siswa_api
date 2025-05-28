@@ -28,7 +28,13 @@ class User extends Authenticatable
         'phone',
         'password',
         'role',
+        'active',
     ];
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

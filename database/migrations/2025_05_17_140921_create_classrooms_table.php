@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->integer('grade');
+            $table->string('grade');
             $table->integer('capacity');
             $table->timestamps();
         });

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('grade')->nullable();
             $table->string('parent_name')->nullable();
             $table->string('parent_phone')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }
